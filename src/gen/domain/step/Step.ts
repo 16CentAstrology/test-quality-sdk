@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface Step extends KeyedModel {
   created_by: number;
@@ -30,4 +30,6 @@ export interface Step extends KeyedModel {
   key: number;
   step_type_id?: number;
   id: number;
+  shared_step_id?: number;
+  source?: any;
 }

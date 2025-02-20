@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface Invoice extends KeyedModel {
   amount: number;
@@ -13,7 +13,6 @@ export interface Invoice extends KeyedModel {
   epoch: number;
   client_id: number;
   id: number;
-  key: number;
   quote_id: number;
   purchase_order_id?: number;
   terms_days: number;

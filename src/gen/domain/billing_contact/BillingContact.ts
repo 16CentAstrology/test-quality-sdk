@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface BillingContact extends KeyedModel {
   created_at: string;
@@ -11,7 +11,6 @@ export interface BillingContact extends KeyedModel {
   updated_by: number;
   epoch: number;
   client_id: number;
-  key: number;
   id: number;
   subscriptions_id: number;
   user_id?: number;

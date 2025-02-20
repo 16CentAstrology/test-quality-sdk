@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface Test extends KeyedModel {
   id: number;
@@ -33,4 +33,7 @@ export interface Test extends KeyedModel {
   state_mask?: number;
   test_type_id?: number;
   data_set_id?: number;
+  shared_precondition_id?: number;
+  to_automate: boolean;
+  source?: any;
 }

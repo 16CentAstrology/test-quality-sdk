@@ -1,19 +1,20 @@
 /**
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
-
 /* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/no-empty-interface */
 
-import { Milestone } from './Milestone';
-import { ProjectApi } from '../project/ProjectApi';
-import { LabelAssignedApi } from '../label_assigned/LabelAssignedApi';
-import { CommentApi } from '../comment/CommentApi';
-import { RunApi } from '../run/RunApi';
+import type { Milestone } from './Milestone';
+import type { ProjectApi } from '../project/ProjectApi';
+import type { LabelAssignedApi } from '../label_assigned/LabelAssignedApi';
+import type { ExplorationApi } from '../exploration/ExplorationApi';
+import type { CommentApi } from '../comment/CommentApi';
+import type { RunApi } from '../run/RunApi';
 
 export interface MilestoneApi extends Milestone {
   project?: ProjectApi;
   label_assigned?: LabelAssignedApi;
+  exploration?: ExplorationApi[];
   comment?: CommentApi;
   run?: RunApi[];
 }

@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface Policy extends KeyedModel {
   id: number;
@@ -49,6 +49,5 @@ export interface Policy extends KeyedModel {
    * Is this row a system row? A system row cannot be modified or deleted.
    */
   is_system?: boolean;
-  key: number;
   can_list?: boolean;
 }

@@ -4,97 +4,122 @@
 
 import { _client } from '../../../ClientSdk';
 import { getResponse } from '../../actions/getResponse';
-import { QueryParams } from '../../actions/QueryParams';
-import { MessageResponse } from '../../actions/MessageResponse';
-import { ResourceList } from '../../models/ResourceList';
+import type {
+  QueryParams,
+  QueryParamsWithList,
+} from '../../actions/QueryParams';
+import type { MessageResponse } from '../../actions/MessageResponse';
+import type { ResourceList } from '../../models/ResourceList';
 import { InvoiceRoute } from '../../routes/Routes';
-import { Invoice } from './Invoice';
-import { InvoiceApi } from './InvoiceApi';
+import type { Invoice } from './Invoice';
+import type { InvoiceApi } from './InvoiceApi';
 
 export const invoiceGetMany = (
-  queryParams?: QueryParams<Invoice>
+  queryParams?: QueryParams<Invoice>,
 ): Promise<ResourceList<InvoiceApi>> => {
   const config: QueryParams<Invoice> = {
     method: 'get',
-    url: queryParams?.url || InvoiceRoute(),
+    url: queryParams?.url ?? InvoiceRoute(),
     params: queryParams?.params,
     cancelToken: queryParams?.cancelToken,
+    headers: queryParams?.headers,
   };
 
   return queryParams?.batch
     ? queryParams.batch.addBatch<ResourceList<InvoiceApi>>(config)
     : getResponse<ResourceList<InvoiceApi>, Invoice>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };
 
 export const invoiceGetOne = (
   id: number,
-  queryParams?: QueryParams<Invoice>
+  queryParams?: QueryParams<Invoice>,
 ): Promise<InvoiceApi> => {
   const config: QueryParams<Invoice> = {
     method: 'get',
-    url: `${queryParams?.url || InvoiceRoute()}/${id}`,
+    url: `${queryParams?.url ?? InvoiceRoute()}/${id}`,
     params: queryParams?.params,
     cancelToken: queryParams?.cancelToken,
+    headers: queryParams?.headers,
   };
 
   return queryParams?.batch
     ? queryParams.batch.addBatch<InvoiceApi>(config)
     : getResponse<InvoiceApi, Invoice>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };
 
 export const invoiceDeleteOne = (
   id: number,
-  queryParams?: QueryParams<Invoice>
+  queryParams?: QueryParams<Invoice>,
 ): Promise<MessageResponse> => {
   const config: QueryParams<Invoice> = {
     method: 'delete',
-    url: `${queryParams?.url || InvoiceRoute()}/${id}`,
+    url: `${queryParams?.url ?? InvoiceRoute()}/${id}`,
     params: queryParams?.params,
+    headers: queryParams?.headers,
   };
 
   return queryParams?.batch
     ? queryParams.batch.addBatch<MessageResponse>(config)
     : getResponse<MessageResponse, Invoice>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };
 
 export const invoiceUpdateOne = (
   id: number,
   data: Partial<Invoice>,
-  queryParams?: QueryParams<Invoice>
+  queryParams?: QueryParams<Invoice>,
 ): Promise<Invoice> => {
   const config: QueryParams<Invoice> = {
     method: 'put',
-    url: `${queryParams?.url || InvoiceRoute()}/${id}`,
+    url: `${queryParams?.url ?? InvoiceRoute()}/${id}`,
     params: queryParams?.params,
     data,
+    headers: queryParams?.headers,
   };
 
   return queryParams?.batch
     ? queryParams.batch.addBatch<Invoice>(config)
-    : getResponse<Invoice>(queryParams?.api || _client?.api, config);
+    : getResponse<Invoice>(queryParams?.api ?? _client?.api, config);
 };
 
 export const invoiceCreateOne = (
   data: Partial<Invoice>,
-  queryParams?: QueryParams<Invoice>
+  queryParams?: QueryParams<Invoice>,
 ): Promise<Invoice> => {
   const config: QueryParams<Invoice> = {
     method: 'post',
-    url: queryParams?.url || InvoiceRoute(),
+    url: queryParams?.url ?? InvoiceRoute(),
     params: queryParams?.params,
     data,
+    headers: queryParams?.headers,
   };
 
   return queryParams?.batch
     ? queryParams.batch.addBatch<Invoice>(config)
-    : getResponse<Invoice>(queryParams?.api || _client?.api, config);
+    : getResponse<Invoice>(queryParams?.api ?? _client?.api, config);
+};
+
+export const invoiceCreateMany = (
+  data: Partial<Invoice>[],
+  queryParams?: QueryParamsWithList<Invoice>,
+): Promise<Invoice[]> => {
+  const config: QueryParamsWithList<Invoice> = {
+    method: 'post',
+    url: queryParams?.url ?? InvoiceRoute(),
+    params: queryParams?.params,
+    list: data,
+    headers: queryParams?.headers,
+  };
+
+  return queryParams?.batch
+    ? queryParams.batch.addBatch<Invoice[]>(config)
+    : getResponse<Invoice[], Invoice>(queryParams?.api ?? _client?.api, config);
 };

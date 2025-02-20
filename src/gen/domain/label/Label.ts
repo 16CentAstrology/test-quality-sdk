@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface Label extends KeyedModel {
   created_at: string;
@@ -13,5 +13,4 @@ export interface Label extends KeyedModel {
   epoch: number;
   id: number;
   label: string;
-  key: number;
 }

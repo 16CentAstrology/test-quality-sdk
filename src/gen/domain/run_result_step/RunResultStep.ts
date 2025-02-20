@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface RunResultStep extends KeyedModel {
   created_by: number;
@@ -38,4 +38,5 @@ export interface RunResultStep extends KeyedModel {
   run_result_id: number;
   id: number;
   step_epoch?: number;
+  source?: any;
 }

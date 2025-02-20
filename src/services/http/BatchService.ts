@@ -4,8 +4,12 @@
 /* eslint-disable import/no-cycle */
 
 import * as querystring from 'querystring';
-import { AxiosError, AxiosResponse, Method } from 'axios';
-import { QueryParams } from '../../gen/actions/QueryParams';
+import { type AxiosError, type AxiosResponse, type Method } from 'axios';
+import {
+  type QueryParams,
+  type QueryParamsWithList,
+  hasListProperty,
+} from '../../gen/actions/QueryParams';
 import { getHttpResponse } from '../../exceptions/handleHttpError';
 import { _client } from '../../ClientSdk';
 
@@ -36,9 +40,9 @@ interface BatchRequestContainer {
 }
 
 export class BatchService {
-  private batchContainers: BatchRequestContainer[] = [];
+  private readonly batchContainers: BatchRequestContainer[] = [];
 
-  public addBatch<T>(request: QueryParams) {
+  public addBatch<T>(request: QueryParams | QueryParamsWithList) {
     return new Promise<T>((resolve, reject) => {
       const paramsString = request.params
         ? `?${querystring.stringify(request.params)}`
@@ -48,8 +52,8 @@ export class BatchService {
           method: request.method
             ? (request.method.toUpperCase() as Method)
             : 'GET',
-          endpoint: `/api${request.url}${paramsString}` || '/',
-          body: request.data,
+          endpoint: `/api${request.url}${paramsString}`,
+          body: hasListProperty(request) ? request.list : request.data,
         },
         resolve,
         reject,
@@ -82,7 +86,7 @@ export class BatchService {
         (error) => {
           this.failAll(error);
           reject(error);
-        }
+        },
       );
     });
   }
@@ -90,12 +94,13 @@ export class BatchService {
   private handleBatchResponse(
     response: AxiosResponse<BatchResponses>,
     resolve: (value: BatchResponses | PromiseLike<BatchResponses>) => void,
-    reject: (reason?: any) => void
+    reject: (reason?: any) => void,
   ) {
-    if (!response || !response.data || !response.data.responses) {
+    if (!response?.data?.responses) {
       const error = new Error('Batch has no data');
       this.failAll(error);
-      return reject(error);
+      reject(error);
+      return;
     }
 
     const responses = response.data.responses[0];
@@ -104,7 +109,7 @@ export class BatchService {
         (r) =>
           r.method === batchContainer.request.method &&
           r.endpoint === batchContainer.request.endpoint &&
-          !r.processed
+          !r.processed,
       );
 
       if (res) {
@@ -116,7 +121,7 @@ export class BatchService {
             url: `${batchContainer.request.method}: ${batchContainer.request.endpoint}`,
           };
           batchContainer.reject(
-            getHttpResponse(res as unknown as AxiosResponse)
+            getHttpResponse(res as unknown as AxiosResponse),
           );
         }
       } else {
@@ -128,7 +133,7 @@ export class BatchService {
         });
       }
     });
-    return resolve(response.data);
+    resolve(response.data);
   }
 
   private failAll(error: AxiosError | Error) {

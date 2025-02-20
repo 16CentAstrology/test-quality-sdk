@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface LabelAssigned extends KeyedModel {
   related_id: number;
@@ -15,5 +15,4 @@ export interface LabelAssigned extends KeyedModel {
   epoch: number;
   id: number;
   label_id: number;
-  key: number;
 }

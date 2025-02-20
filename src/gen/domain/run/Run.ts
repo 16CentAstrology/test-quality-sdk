@@ -2,8 +2,8 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
-import { RunAnalysisApi } from '../../models/RunAnalysisApi';
+import type { KeyedModel } from '../../models/KeyedModel';
+import type { RunAnalysisApi } from '../../models/RunAnalysisApi';
 
 export interface Run extends KeyedModel {
   id: number;
@@ -48,5 +48,7 @@ export interface Run extends KeyedModel {
   run_result_step_rows: number;
   is_permanent?: boolean;
   check_run_id?: number;
+  is_automated: boolean;
+  source?: any;
   analysis?: RunAnalysisApi;
 }

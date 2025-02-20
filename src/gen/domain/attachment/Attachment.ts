@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface Attachment extends KeyedModel {
   related_id: number;
@@ -19,8 +19,13 @@ export interface Attachment extends KeyedModel {
   client_id: number;
   epoch: number;
   id: number;
-  attachment_type_id: number;
-  key: number;
   original_file_name: string;
   size?: bigint;
+  mime_type?: string;
+  storage_path?: string;
+  private_url?: string;
+  is_public: boolean;
+  public_path?: string;
+  old_url?: string;
+  source?: any;
 }

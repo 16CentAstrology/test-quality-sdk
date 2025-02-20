@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface Purpose extends KeyedModel {
   id: number;
@@ -31,4 +31,5 @@ export interface Purpose extends KeyedModel {
   virtual?: any;
   key: number;
   weight?: number;
+  all_projects: boolean;
 }

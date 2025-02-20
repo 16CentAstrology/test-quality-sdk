@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface CasePriority extends KeyedModel {
   id: number;
@@ -30,4 +30,5 @@ export interface CasePriority extends KeyedModel {
   is_default: boolean;
   virtual?: any;
   key: number;
+  all_projects: boolean;
 }

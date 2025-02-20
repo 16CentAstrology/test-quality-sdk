@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { TenantScopedModel } from '../../models/TenantScopedModel';
+import type { TenantScopedModel } from '../../models/TenantScopedModel';
 
 export interface RequirementTest extends TenantScopedModel {
   created_at: string;
@@ -12,7 +12,7 @@ export interface RequirementTest extends TenantScopedModel {
   epoch: number;
   client_id: number;
   id: number;
-  requirement_id?: number;
-  test_id?: number;
+  requirement_id: number;
+  test_id: number;
   suite_id?: number;
 }

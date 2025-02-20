@@ -4,15 +4,18 @@
 
 import { _client } from '../../../ClientSdk';
 import { getResponse } from '../../actions/getResponse';
-import { QueryParams } from '../../actions/QueryParams';
-import { MessageResponse } from '../../actions/MessageResponse';
-import { ResourceList } from '../../models/ResourceList';
-import { AccessRoleUser } from './AccessRoleUser';
-import { AccessRoleUserApi } from './AccessRoleUserApi';
+import type {
+  QueryParams,
+  QueryParamsWithList,
+} from '../../actions/QueryParams';
+import type { MessageResponse } from '../../actions/MessageResponse';
+import type { ResourceList } from '../../models/ResourceList';
+import type { AccessRoleUser } from './AccessRoleUser';
+import type { AccessRoleUserApi } from './AccessRoleUserApi';
 
 export const accessRoleUserDetach = (
   data: Partial<AccessRoleUser>,
-  queryParams?: QueryParams<AccessRoleUser>
+  queryParams?: QueryParams<AccessRoleUser>,
 ): Promise<MessageResponse> => {
   if (data.id === undefined) {
     return Promise.reject(new Error('Must supply id'));
@@ -26,15 +29,15 @@ export const accessRoleUserDetach = (
   return queryParams?.batch
     ? queryParams.batch.addBatch<MessageResponse>(config)
     : getResponse<MessageResponse, AccessRoleUser>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };
 
 export const accessRoleUserUpdateOne = (
   id: number,
   data: Partial<AccessRoleUser>,
-  queryParams?: QueryParams<AccessRoleUser>
+  queryParams?: QueryParams<AccessRoleUser>,
 ): Promise<AccessRoleUser> => {
   const config: QueryParams<AccessRoleUser> = {
     method: 'put',
@@ -45,31 +48,50 @@ export const accessRoleUserUpdateOne = (
 
   return queryParams?.batch
     ? queryParams.batch.addBatch<AccessRoleUser>(config)
-    : getResponse<AccessRoleUser>(queryParams?.api || _client?.api, config);
+    : getResponse<AccessRoleUser>(queryParams?.api ?? _client?.api, config);
 };
 
 export const accessRoleUserCreateOne = (
   data: Partial<AccessRoleUser>,
-  queryParams?: QueryParams<AccessRoleUser>
+  queryParams?: QueryParams<AccessRoleUser>,
 ): Promise<AccessRoleUser> => {
   const config: QueryParams<AccessRoleUser> = {
     method: 'post',
-    url: queryParams?.url || `/access_role_user`,
+    url: queryParams?.url ?? `/access_role_user`,
     params: queryParams?.params,
     data,
   };
 
   return queryParams?.batch
     ? queryParams.batch.addBatch<AccessRoleUser>(config)
-    : getResponse<AccessRoleUser>(queryParams?.api || _client?.api, config);
+    : getResponse<AccessRoleUser>(queryParams?.api ?? _client?.api, config);
+};
+
+export const accessRoleUserCreateMany = (
+  data: Partial<AccessRoleUser>[],
+  queryParams?: QueryParamsWithList<AccessRoleUser>,
+): Promise<AccessRoleUser[]> => {
+  const config: QueryParamsWithList<AccessRoleUser> = {
+    method: 'post',
+    url: queryParams?.url ?? `/access_role_user`,
+    params: queryParams?.params,
+    list: data,
+  };
+
+  return queryParams?.batch
+    ? queryParams.batch.addBatch<AccessRoleUser[]>(config)
+    : getResponse<AccessRoleUser[], AccessRoleUser>(
+        queryParams?.api ?? _client?.api,
+        config,
+      );
 };
 
 export const accessRoleUserGetMany = (
-  queryParams?: QueryParams<AccessRoleUser>
+  queryParams?: QueryParams<AccessRoleUser>,
 ): Promise<ResourceList<AccessRoleUserApi>> => {
   const config: QueryParams<AccessRoleUser> = {
     method: 'get',
-    url: queryParams?.url || `/access_role_user`,
+    url: queryParams?.url ?? `/access_role_user`,
     params: queryParams?.params,
     cancelToken: queryParams?.cancelToken,
   };
@@ -77,18 +99,18 @@ export const accessRoleUserGetMany = (
   return queryParams?.batch
     ? queryParams.batch.addBatch<ResourceList<AccessRoleUserApi>>(config)
     : getResponse<ResourceList<AccessRoleUserApi>, AccessRoleUser>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };
 
 export const accessRoleUserGetOne = (
   id: number,
-  queryParams?: QueryParams<AccessRoleUser>
+  queryParams?: QueryParams<AccessRoleUser>,
 ): Promise<AccessRoleUserApi> => {
   const config: QueryParams<AccessRoleUser> = {
     method: 'get',
-    url: `${queryParams?.url || `/access_role_user/${id}`}`,
+    url: `${queryParams?.url ?? `/access_role_user/${id}`}`,
     params: queryParams?.params,
     cancelToken: queryParams?.cancelToken,
   };
@@ -96,7 +118,7 @@ export const accessRoleUserGetOne = (
   return queryParams?.batch
     ? queryParams.batch.addBatch<AccessRoleUserApi>(config)
     : getResponse<AccessRoleUserApi, AccessRoleUser>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };

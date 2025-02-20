@@ -1,5 +1,5 @@
-export type TestRailCredentials = {
-  url: string;
+export interface TestRailCredentials {
+  default_url: string;
   username: string;
   password: string;
-};
+}

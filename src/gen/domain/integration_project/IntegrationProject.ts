@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { TenantScopedModel } from '../../models/TenantScopedModel';
+import type { TenantScopedModel } from '../../models/TenantScopedModel';
 
 export interface IntegrationProject extends TenantScopedModel {
   id: number;
@@ -50,4 +50,8 @@ export interface IntegrationProject extends TenantScopedModel {
   webhook_url?: string;
   org: string;
   project_reference_name?: string;
+  app_install_project_id?: number;
+  org_id?: string;
+  enable_pull_request_testing: boolean;
+  plan_id?: number;
 }

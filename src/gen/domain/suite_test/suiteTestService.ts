@@ -4,15 +4,18 @@
 
 import { _client } from '../../../ClientSdk';
 import { getResponse } from '../../actions/getResponse';
-import { QueryParams } from '../../actions/QueryParams';
-import { MessageResponse } from '../../actions/MessageResponse';
-import { ResourceList } from '../../models/ResourceList';
-import { SuiteTest } from './SuiteTest';
-import { SuiteTestApi } from './SuiteTestApi';
+import type {
+  QueryParams,
+  QueryParamsWithList,
+} from '../../actions/QueryParams';
+import type { MessageResponse } from '../../actions/MessageResponse';
+import type { ResourceList } from '../../models/ResourceList';
+import type { SuiteTest } from './SuiteTest';
+import type { SuiteTestApi } from './SuiteTestApi';
 
 export const suiteTestDetach = (
   data: Partial<SuiteTest>,
-  queryParams?: QueryParams<SuiteTest>
+  queryParams?: QueryParams<SuiteTest>,
 ): Promise<MessageResponse> => {
   if (data.id === undefined) {
     return Promise.reject(new Error('Must supply id'));
@@ -26,15 +29,15 @@ export const suiteTestDetach = (
   return queryParams?.batch
     ? queryParams.batch.addBatch<MessageResponse>(config)
     : getResponse<MessageResponse, SuiteTest>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };
 
 export const suiteTestUpdateOne = (
   id: number,
   data: Partial<SuiteTest>,
-  queryParams?: QueryParams<SuiteTest>
+  queryParams?: QueryParams<SuiteTest>,
 ): Promise<SuiteTest> => {
   const config: QueryParams<SuiteTest> = {
     method: 'put',
@@ -45,31 +48,50 @@ export const suiteTestUpdateOne = (
 
   return queryParams?.batch
     ? queryParams.batch.addBatch<SuiteTest>(config)
-    : getResponse<SuiteTest>(queryParams?.api || _client?.api, config);
+    : getResponse<SuiteTest>(queryParams?.api ?? _client?.api, config);
 };
 
 export const suiteTestCreateOne = (
   data: Partial<SuiteTest>,
-  queryParams?: QueryParams<SuiteTest>
+  queryParams?: QueryParams<SuiteTest>,
 ): Promise<SuiteTest> => {
   const config: QueryParams<SuiteTest> = {
     method: 'post',
-    url: queryParams?.url || `/suite_test`,
+    url: queryParams?.url ?? `/suite_test`,
     params: queryParams?.params,
     data,
   };
 
   return queryParams?.batch
     ? queryParams.batch.addBatch<SuiteTest>(config)
-    : getResponse<SuiteTest>(queryParams?.api || _client?.api, config);
+    : getResponse<SuiteTest>(queryParams?.api ?? _client?.api, config);
+};
+
+export const suiteTestCreateMany = (
+  data: Partial<SuiteTest>[],
+  queryParams?: QueryParamsWithList<SuiteTest>,
+): Promise<SuiteTest[]> => {
+  const config: QueryParamsWithList<SuiteTest> = {
+    method: 'post',
+    url: queryParams?.url ?? `/suite_test`,
+    params: queryParams?.params,
+    list: data,
+  };
+
+  return queryParams?.batch
+    ? queryParams.batch.addBatch<SuiteTest[]>(config)
+    : getResponse<SuiteTest[], SuiteTest>(
+        queryParams?.api ?? _client?.api,
+        config,
+      );
 };
 
 export const suiteTestGetMany = (
-  queryParams?: QueryParams<SuiteTest>
+  queryParams?: QueryParams<SuiteTest>,
 ): Promise<ResourceList<SuiteTestApi>> => {
   const config: QueryParams<SuiteTest> = {
     method: 'get',
-    url: queryParams?.url || `/suite_test`,
+    url: queryParams?.url ?? `/suite_test`,
     params: queryParams?.params,
     cancelToken: queryParams?.cancelToken,
   };
@@ -77,18 +99,18 @@ export const suiteTestGetMany = (
   return queryParams?.batch
     ? queryParams.batch.addBatch<ResourceList<SuiteTestApi>>(config)
     : getResponse<ResourceList<SuiteTestApi>, SuiteTest>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };
 
 export const suiteTestGetOne = (
   id: number,
-  queryParams?: QueryParams<SuiteTest>
+  queryParams?: QueryParams<SuiteTest>,
 ): Promise<SuiteTestApi> => {
   const config: QueryParams<SuiteTest> = {
     method: 'get',
-    url: `${queryParams?.url || `/suite_test/${id}`}`,
+    url: `${queryParams?.url ?? `/suite_test/${id}`}`,
     params: queryParams?.params,
     cancelToken: queryParams?.cancelToken,
   };
@@ -96,7 +118,7 @@ export const suiteTestGetOne = (
   return queryParams?.batch
     ? queryParams.batch.addBatch<SuiteTestApi>(config)
     : getResponse<SuiteTestApi, SuiteTest>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };

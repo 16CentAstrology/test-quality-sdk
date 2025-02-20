@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface Requirement extends KeyedModel {
   /**
@@ -24,4 +24,8 @@ export interface Requirement extends KeyedModel {
   id: number;
   defect_status_id?: number;
   defect_res_id?: number;
+  /**
+   * Whether to create run during Pull Request checks.
+   */
+  include_in_checks?: boolean;
 }

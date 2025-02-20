@@ -4,15 +4,18 @@
 
 import { _client } from '../../../ClientSdk';
 import { getResponse } from '../../actions/getResponse';
-import { QueryParams } from '../../actions/QueryParams';
-import { MessageResponse } from '../../actions/MessageResponse';
-import { ResourceList } from '../../models/ResourceList';
-import { DefectRunResult } from './DefectRunResult';
-import { DefectRunResultApi } from './DefectRunResultApi';
+import type {
+  QueryParams,
+  QueryParamsWithList,
+} from '../../actions/QueryParams';
+import type { MessageResponse } from '../../actions/MessageResponse';
+import type { ResourceList } from '../../models/ResourceList';
+import type { DefectRunResult } from './DefectRunResult';
+import type { DefectRunResultApi } from './DefectRunResultApi';
 
 export const defectRunResultDetach = (
   data: Partial<DefectRunResult>,
-  queryParams?: QueryParams<DefectRunResult>
+  queryParams?: QueryParams<DefectRunResult>,
 ): Promise<MessageResponse> => {
   if (data.id === undefined) {
     return Promise.reject(new Error('Must supply id'));
@@ -26,15 +29,15 @@ export const defectRunResultDetach = (
   return queryParams?.batch
     ? queryParams.batch.addBatch<MessageResponse>(config)
     : getResponse<MessageResponse, DefectRunResult>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };
 
 export const defectRunResultUpdateOne = (
   id: number,
   data: Partial<DefectRunResult>,
-  queryParams?: QueryParams<DefectRunResult>
+  queryParams?: QueryParams<DefectRunResult>,
 ): Promise<DefectRunResult> => {
   const config: QueryParams<DefectRunResult> = {
     method: 'put',
@@ -45,31 +48,50 @@ export const defectRunResultUpdateOne = (
 
   return queryParams?.batch
     ? queryParams.batch.addBatch<DefectRunResult>(config)
-    : getResponse<DefectRunResult>(queryParams?.api || _client?.api, config);
+    : getResponse<DefectRunResult>(queryParams?.api ?? _client?.api, config);
 };
 
 export const defectRunResultCreateOne = (
   data: Partial<DefectRunResult>,
-  queryParams?: QueryParams<DefectRunResult>
+  queryParams?: QueryParams<DefectRunResult>,
 ): Promise<DefectRunResult> => {
   const config: QueryParams<DefectRunResult> = {
     method: 'post',
-    url: queryParams?.url || `/defect_run_result`,
+    url: queryParams?.url ?? `/defect_run_result`,
     params: queryParams?.params,
     data,
   };
 
   return queryParams?.batch
     ? queryParams.batch.addBatch<DefectRunResult>(config)
-    : getResponse<DefectRunResult>(queryParams?.api || _client?.api, config);
+    : getResponse<DefectRunResult>(queryParams?.api ?? _client?.api, config);
+};
+
+export const defectRunResultCreateMany = (
+  data: Partial<DefectRunResult>[],
+  queryParams?: QueryParamsWithList<DefectRunResult>,
+): Promise<DefectRunResult[]> => {
+  const config: QueryParamsWithList<DefectRunResult> = {
+    method: 'post',
+    url: queryParams?.url ?? `/defect_run_result`,
+    params: queryParams?.params,
+    list: data,
+  };
+
+  return queryParams?.batch
+    ? queryParams.batch.addBatch<DefectRunResult[]>(config)
+    : getResponse<DefectRunResult[], DefectRunResult>(
+        queryParams?.api ?? _client?.api,
+        config,
+      );
 };
 
 export const defectRunResultGetMany = (
-  queryParams?: QueryParams<DefectRunResult>
+  queryParams?: QueryParams<DefectRunResult>,
 ): Promise<ResourceList<DefectRunResultApi>> => {
   const config: QueryParams<DefectRunResult> = {
     method: 'get',
-    url: queryParams?.url || `/defect_run_result`,
+    url: queryParams?.url ?? `/defect_run_result`,
     params: queryParams?.params,
     cancelToken: queryParams?.cancelToken,
   };
@@ -77,18 +99,18 @@ export const defectRunResultGetMany = (
   return queryParams?.batch
     ? queryParams.batch.addBatch<ResourceList<DefectRunResultApi>>(config)
     : getResponse<ResourceList<DefectRunResultApi>, DefectRunResult>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };
 
 export const defectRunResultGetOne = (
   id: number,
-  queryParams?: QueryParams<DefectRunResult>
+  queryParams?: QueryParams<DefectRunResult>,
 ): Promise<DefectRunResultApi> => {
   const config: QueryParams<DefectRunResult> = {
     method: 'get',
-    url: `${queryParams?.url || `/defect_run_result/${id}`}`,
+    url: `${queryParams?.url ?? `/defect_run_result/${id}`}`,
     params: queryParams?.params,
     cancelToken: queryParams?.cancelToken,
   };
@@ -96,7 +118,7 @@ export const defectRunResultGetOne = (
   return queryParams?.batch
     ? queryParams.batch.addBatch<DefectRunResultApi>(config)
     : getResponse<DefectRunResultApi, DefectRunResult>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };

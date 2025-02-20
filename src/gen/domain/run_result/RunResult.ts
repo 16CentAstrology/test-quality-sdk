@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface RunResult extends KeyedModel {
   test_id: number;
@@ -18,7 +18,6 @@ export interface RunResult extends KeyedModel {
   virtual?: any;
   client_id: number;
   suite_id: number;
-  app_version_plat_version_id?: number;
   project_id: number;
   run_id: number;
   /**
@@ -37,4 +36,6 @@ export interface RunResult extends KeyedModel {
   flakiness?: number;
   data_set_row?: number;
   test_epoch?: number;
+  environment_id?: number;
+  source?: any;
 }

@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface RunSuite extends KeyedModel {
   id: number;
@@ -21,4 +21,5 @@ export interface RunSuite extends KeyedModel {
   plan_suite_id: number;
   suite_id: number;
   suite_epoch: number;
+  source?: any;
 }

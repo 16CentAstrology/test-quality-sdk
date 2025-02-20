@@ -2,8 +2,8 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
-import { ProjectAnalysisApi } from '../../models/ProjectAnalysisApi';
+import type { KeyedModel } from '../../models/KeyedModel';
+import type { ProjectAnalysisApi } from '../../models/ProjectAnalysisApi';
 
 export interface Project extends KeyedModel {
   id: number;
@@ -32,5 +32,6 @@ export interface Project extends KeyedModel {
   picture?: string;
   virtual?: any;
   key: number;
+  source?: any;
   analysis?: ProjectAnalysisApi;
 }

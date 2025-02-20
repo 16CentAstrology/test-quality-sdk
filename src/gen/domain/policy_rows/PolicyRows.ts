@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface PolicyRows extends KeyedModel {
   id: number;
@@ -21,5 +21,4 @@ export interface PolicyRows extends KeyedModel {
    * The name of the column to use to match for this policy.
    */
   column_name: string;
-  key: number;
 }

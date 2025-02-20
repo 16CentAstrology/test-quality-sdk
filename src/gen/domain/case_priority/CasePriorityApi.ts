@@ -1,15 +1,16 @@
 /**
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
-
 /* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/no-empty-interface */
 
-import { CasePriority } from './CasePriority';
-import { LabelAssignedApi } from '../label_assigned/LabelAssignedApi';
-import { TestApi } from '../test/TestApi';
+import type { CasePriority } from './CasePriority';
+import type { LabelAssignedApi } from '../label_assigned/LabelAssignedApi';
+import type { CasePriorityProjectApi } from '../case_priority_project/CasePriorityProjectApi';
+import type { TestApi } from '../test/TestApi';
 
 export interface CasePriorityApi extends CasePriority {
   label_assigned?: LabelAssignedApi;
+  case_priority_project?: CasePriorityProjectApi[];
   test?: TestApi[];
 }

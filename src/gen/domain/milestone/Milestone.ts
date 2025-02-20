@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface Milestone extends KeyedModel {
   id: number;
@@ -62,4 +62,7 @@ export interface Milestone extends KeyedModel {
   key: number;
   deleted_at?: string;
   total_test_cases: number;
+  parent_id?: number;
+  milestone_type_id?: number;
+  source?: any;
 }

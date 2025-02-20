@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { DefaultAttributes } from '../../models/DefaultAttributes';
+import type { DefaultAttributes } from '../../models/DefaultAttributes';
 
 export interface Product extends DefaultAttributes {
   name: string;
@@ -38,4 +38,8 @@ export interface Product extends DefaultAttributes {
   display_name: string;
   user_limit: number;
   product_master_id: number;
+  can_increment: boolean;
+  upgrade_product_id?: number;
+  stripe_product_id?: number;
+  price_id?: number;
 }

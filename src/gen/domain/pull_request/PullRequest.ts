@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface PullRequest extends KeyedModel {
   id: number;
@@ -10,7 +10,6 @@ export interface PullRequest extends KeyedModel {
   name: string;
   head_sha: string;
   state?: string;
-  user_reference_id?: string;
   number?: number;
   description?: string;
   html_url?: string;
@@ -23,4 +22,8 @@ export interface PullRequest extends KeyedModel {
   epoch: number;
   client_id: number;
   app_install_project_id: number;
+  app_user_id?: number;
+  base?: any;
+  head?: any;
+  branch_id: number;
 }

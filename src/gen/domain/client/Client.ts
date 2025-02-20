@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { DefaultAttributes } from '../../models/DefaultAttributes';
+import type { DefaultAttributes } from '../../models/DefaultAttributes';
 
 export interface Client extends DefaultAttributes {
   id: number;
@@ -40,4 +40,5 @@ export interface Client extends DefaultAttributes {
   space_free: number;
   openid_url?: string;
   openid_client_id?: string;
+  type?: number;
 }

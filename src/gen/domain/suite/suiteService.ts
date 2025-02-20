@@ -4,94 +4,119 @@
 
 import { _client } from '../../../ClientSdk';
 import { getResponse } from '../../actions/getResponse';
-import { QueryParams } from '../../actions/QueryParams';
-import { MessageResponse } from '../../actions/MessageResponse';
-import { ResourceList } from '../../models/ResourceList';
+import type {
+  QueryParams,
+  QueryParamsWithList,
+} from '../../actions/QueryParams';
+import type { MessageResponse } from '../../actions/MessageResponse';
+import type { ResourceList } from '../../models/ResourceList';
 import { SuiteRoute } from '../../routes/Routes';
-import { Suite } from './Suite';
-import { SuiteApi } from './SuiteApi';
+import type { Suite } from './Suite';
+import type { SuiteApi } from './SuiteApi';
 
 export const suiteGetMany = (
-  queryParams?: QueryParams<Suite>
+  queryParams?: QueryParams<Suite>,
 ): Promise<ResourceList<SuiteApi>> => {
   const config: QueryParams<Suite> = {
     method: 'get',
-    url: queryParams?.url || SuiteRoute(),
+    url: queryParams?.url ?? SuiteRoute(),
     params: queryParams?.params,
     cancelToken: queryParams?.cancelToken,
+    headers: queryParams?.headers,
   };
 
   return queryParams?.batch
     ? queryParams.batch.addBatch<ResourceList<SuiteApi>>(config)
     : getResponse<ResourceList<SuiteApi>, Suite>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };
 
 export const suiteGetOne = (
   id: number,
-  queryParams?: QueryParams<Suite>
+  queryParams?: QueryParams<Suite>,
 ): Promise<SuiteApi> => {
   const config: QueryParams<Suite> = {
     method: 'get',
-    url: `${queryParams?.url || SuiteRoute()}/${id}`,
+    url: `${queryParams?.url ?? SuiteRoute()}/${id}`,
     params: queryParams?.params,
     cancelToken: queryParams?.cancelToken,
+    headers: queryParams?.headers,
   };
 
   return queryParams?.batch
     ? queryParams.batch.addBatch<SuiteApi>(config)
-    : getResponse<SuiteApi, Suite>(queryParams?.api || _client?.api, config);
+    : getResponse<SuiteApi, Suite>(queryParams?.api ?? _client?.api, config);
 };
 
 export const suiteDeleteOne = (
   id: number,
-  queryParams?: QueryParams<Suite>
+  queryParams?: QueryParams<Suite>,
 ): Promise<MessageResponse> => {
   const config: QueryParams<Suite> = {
     method: 'delete',
-    url: `${queryParams?.url || SuiteRoute()}/${id}`,
+    url: `${queryParams?.url ?? SuiteRoute()}/${id}`,
     params: queryParams?.params,
+    headers: queryParams?.headers,
   };
 
   return queryParams?.batch
     ? queryParams.batch.addBatch<MessageResponse>(config)
     : getResponse<MessageResponse, Suite>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };
 
 export const suiteUpdateOne = (
   id: number,
   data: Partial<Suite>,
-  queryParams?: QueryParams<Suite>
+  queryParams?: QueryParams<Suite>,
 ): Promise<Suite> => {
   const config: QueryParams<Suite> = {
     method: 'put',
-    url: `${queryParams?.url || SuiteRoute()}/${id}`,
+    url: `${queryParams?.url ?? SuiteRoute()}/${id}`,
     params: queryParams?.params,
     data,
+    headers: queryParams?.headers,
   };
 
   return queryParams?.batch
     ? queryParams.batch.addBatch<Suite>(config)
-    : getResponse<Suite>(queryParams?.api || _client?.api, config);
+    : getResponse<Suite>(queryParams?.api ?? _client?.api, config);
 };
 
 export const suiteCreateOne = (
   data: Partial<Suite>,
-  queryParams?: QueryParams<Suite>
+  queryParams?: QueryParams<Suite>,
 ): Promise<Suite> => {
   const config: QueryParams<Suite> = {
     method: 'post',
-    url: queryParams?.url || SuiteRoute(),
+    url: queryParams?.url ?? SuiteRoute(),
     params: queryParams?.params,
     data,
+    headers: queryParams?.headers,
   };
 
   return queryParams?.batch
     ? queryParams.batch.addBatch<Suite>(config)
-    : getResponse<Suite>(queryParams?.api || _client?.api, config);
+    : getResponse<Suite>(queryParams?.api ?? _client?.api, config);
+};
+
+export const suiteCreateMany = (
+  data: Partial<Suite>[],
+  queryParams?: QueryParamsWithList<Suite>,
+): Promise<Suite[]> => {
+  const config: QueryParamsWithList<Suite> = {
+    method: 'post',
+    url: queryParams?.url ?? SuiteRoute(),
+    params: queryParams?.params,
+    list: data,
+    headers: queryParams?.headers,
+  };
+
+  return queryParams?.batch
+    ? queryParams.batch.addBatch<Suite[]>(config)
+    : getResponse<Suite[], Suite>(queryParams?.api ?? _client?.api, config);
 };

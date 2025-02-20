@@ -2,8 +2,8 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
-import { PlanAnalysisApi } from '../../models/PlanAnalysisApi';
+import type { KeyedModel } from '../../models/KeyedModel';
+import type { PlanAnalysisApi } from '../../models/PlanAnalysisApi';
 
 export interface Plan extends KeyedModel {
   id: number;
@@ -34,5 +34,7 @@ export interface Plan extends KeyedModel {
    * Whether to create run during Pull Request checks.
    */
   include_in_checks?: boolean;
+  is_automated: boolean;
+  source?: any;
   analysis?: PlanAnalysisApi;
 }

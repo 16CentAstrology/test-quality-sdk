@@ -1,22 +1,22 @@
 import { _client } from '../../ClientSdk';
-import { getResponse, QueryParams } from '../../gen/actions';
+import { getResponse, type QueryParams } from '../../gen/actions';
 
-export type RestrictProjectParam = {
+export interface RestrictProjectParam {
   access_role_id: number;
   project_id: number | number[];
-};
+}
 
-export type RestrictProjectReturn = {
+export interface RestrictProjectReturn {
   updated: number;
-};
+}
 
 export const restrictProject = (
   data: Partial<RestrictProjectParam>,
-  queryParams?: QueryParams<RestrictProjectParam>
+  queryParams?: QueryParams<RestrictProjectParam>,
 ): Promise<RestrictProjectReturn> => {
   const config: QueryParams<RestrictProjectParam> = {
     method: 'post',
-    url: queryParams?.url || '/access_role/project',
+    url: queryParams?.url ?? '/access_role/project',
     params: queryParams?.params,
     data,
   };
@@ -24,7 +24,7 @@ export const restrictProject = (
   return queryParams?.batch
     ? queryParams.batch.addBatch<RestrictProjectReturn>(config)
     : getResponse<RestrictProjectReturn, RestrictProjectParam>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };

@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface Integration extends KeyedModel {
   id: number;
@@ -47,4 +47,7 @@ export interface Integration extends KeyedModel {
   access_token_request?: string;
   refresh_token_request?: string;
   scope?: string;
+  enable_pull_request_testing: boolean;
+  include_initial_check: boolean;
+  include_link_comment: boolean;
 }

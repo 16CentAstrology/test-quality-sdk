@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface Subscriptions extends KeyedModel {
   user_id: number;
@@ -34,4 +34,6 @@ export interface Subscriptions extends KeyedModel {
   is_auto_upgrade: boolean;
   coupon_id?: number;
   marketplace_id?: number;
+  stripe_status?: string;
+  price_id?: number;
 }

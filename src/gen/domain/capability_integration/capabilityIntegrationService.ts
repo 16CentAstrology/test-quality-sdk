@@ -4,15 +4,18 @@
 
 import { _client } from '../../../ClientSdk';
 import { getResponse } from '../../actions/getResponse';
-import { QueryParams } from '../../actions/QueryParams';
-import { MessageResponse } from '../../actions/MessageResponse';
-import { ResourceList } from '../../models/ResourceList';
-import { CapabilityIntegration } from './CapabilityIntegration';
-import { CapabilityIntegrationApi } from './CapabilityIntegrationApi';
+import type {
+  QueryParams,
+  QueryParamsWithList,
+} from '../../actions/QueryParams';
+import type { MessageResponse } from '../../actions/MessageResponse';
+import type { ResourceList } from '../../models/ResourceList';
+import type { CapabilityIntegration } from './CapabilityIntegration';
+import type { CapabilityIntegrationApi } from './CapabilityIntegrationApi';
 
 export const capabilityIntegrationDetach = (
   data: Partial<CapabilityIntegration>,
-  queryParams?: QueryParams<CapabilityIntegration>
+  queryParams?: QueryParams<CapabilityIntegration>,
 ): Promise<MessageResponse> => {
   if (data.id === undefined) {
     return Promise.reject(new Error('Must supply id'));
@@ -26,15 +29,15 @@ export const capabilityIntegrationDetach = (
   return queryParams?.batch
     ? queryParams.batch.addBatch<MessageResponse>(config)
     : getResponse<MessageResponse, CapabilityIntegration>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };
 
 export const capabilityIntegrationUpdateOne = (
   id: number,
   data: Partial<CapabilityIntegration>,
-  queryParams?: QueryParams<CapabilityIntegration>
+  queryParams?: QueryParams<CapabilityIntegration>,
 ): Promise<CapabilityIntegration> => {
   const config: QueryParams<CapabilityIntegration> = {
     method: 'put',
@@ -46,18 +49,18 @@ export const capabilityIntegrationUpdateOne = (
   return queryParams?.batch
     ? queryParams.batch.addBatch<CapabilityIntegration>(config)
     : getResponse<CapabilityIntegration>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };
 
 export const capabilityIntegrationCreateOne = (
   data: Partial<CapabilityIntegration>,
-  queryParams?: QueryParams<CapabilityIntegration>
+  queryParams?: QueryParams<CapabilityIntegration>,
 ): Promise<CapabilityIntegration> => {
   const config: QueryParams<CapabilityIntegration> = {
     method: 'post',
-    url: queryParams?.url || `/capability_integration`,
+    url: queryParams?.url ?? `/capability_integration`,
     params: queryParams?.params,
     data,
   };
@@ -65,17 +68,36 @@ export const capabilityIntegrationCreateOne = (
   return queryParams?.batch
     ? queryParams.batch.addBatch<CapabilityIntegration>(config)
     : getResponse<CapabilityIntegration>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
+      );
+};
+
+export const capabilityIntegrationCreateMany = (
+  data: Partial<CapabilityIntegration>[],
+  queryParams?: QueryParamsWithList<CapabilityIntegration>,
+): Promise<CapabilityIntegration[]> => {
+  const config: QueryParamsWithList<CapabilityIntegration> = {
+    method: 'post',
+    url: queryParams?.url ?? `/capability_integration`,
+    params: queryParams?.params,
+    list: data,
+  };
+
+  return queryParams?.batch
+    ? queryParams.batch.addBatch<CapabilityIntegration[]>(config)
+    : getResponse<CapabilityIntegration[], CapabilityIntegration>(
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };
 
 export const capabilityIntegrationGetMany = (
-  queryParams?: QueryParams<CapabilityIntegration>
+  queryParams?: QueryParams<CapabilityIntegration>,
 ): Promise<ResourceList<CapabilityIntegrationApi>> => {
   const config: QueryParams<CapabilityIntegration> = {
     method: 'get',
-    url: queryParams?.url || `/capability_integration`,
+    url: queryParams?.url ?? `/capability_integration`,
     params: queryParams?.params,
     cancelToken: queryParams?.cancelToken,
   };
@@ -85,16 +107,16 @@ export const capabilityIntegrationGetMany = (
     : getResponse<
         ResourceList<CapabilityIntegrationApi>,
         CapabilityIntegration
-      >(queryParams?.api || _client?.api, config);
+      >(queryParams?.api ?? _client?.api, config);
 };
 
 export const capabilityIntegrationGetOne = (
   id: number,
-  queryParams?: QueryParams<CapabilityIntegration>
+  queryParams?: QueryParams<CapabilityIntegration>,
 ): Promise<CapabilityIntegrationApi> => {
   const config: QueryParams<CapabilityIntegration> = {
     method: 'get',
-    url: `${queryParams?.url || `/capability_integration/${id}`}`,
+    url: `${queryParams?.url ?? `/capability_integration/${id}`}`,
     params: queryParams?.params,
     cancelToken: queryParams?.cancelToken,
   };
@@ -102,7 +124,7 @@ export const capabilityIntegrationGetOne = (
   return queryParams?.batch
     ? queryParams.batch.addBatch<CapabilityIntegrationApi>(config)
     : getResponse<CapabilityIntegrationApi, CapabilityIntegration>(
-        queryParams?.api || _client?.api,
-        config
+        queryParams?.api ?? _client?.api,
+        config,
       );
 };

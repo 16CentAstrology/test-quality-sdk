@@ -1,18 +1,22 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { type AxiosInstance } from 'axios';
 import Debug from 'debug';
-import { PersistentStorage } from './PersistentStorage';
-import { APIWorkerInterface, EmptyLogger, LoggerInterface } from './common';
-import { Options } from './Options';
-import { Auth, AuthCallback, ReturnToken, TokenStorageImpl } from './auth';
-import { HttpError } from './exceptions';
-import { TokenStorage } from './TokenStorage';
+import { type PersistentStorage } from './PersistentStorage';
+import {
+  type APIWorkerInterface,
+  EmptyLogger,
+  type LoggerInterface,
+} from './common';
+import { type Options } from './Options';
+import { Auth, type AuthCallback, TokenStorageImpl } from './auth';
+import { type HttpError } from './exceptions';
+import { type TokenStorage } from './TokenStorage';
 
 export let _client: ClientSdk | undefined;
 
 const debug = Debug('tq:sdk:client');
 
 export class ClientSdk {
-  private auth?: Auth;
+  private readonly auth: Auth;
   public logger: LoggerInterface;
   public api: AxiosInstance;
   public clientId: string;
@@ -29,22 +33,19 @@ export class ClientSdk {
       newError.title,
       newError.status,
       newError.code,
-      newError.trace
+      newError.trace,
     );
   };
 
   public errorHandler: (newError: HttpError) => void = this.errorHandlerDefault;
-  // eslint-disable-next-line
-  public tokenUpdateHandler: ((token?: ReturnToken) => void) | (() => void) =
-    () => {};
 
   constructor(options: Options) {
-    debug('constructor', options, this.id);
-    const baseUrl = options.baseUrl || 'https://api.testquality.com';
-    this.logger = options.logger || new EmptyLogger();
+    debug('constructor', { id: this.id, versions: 1, options });
+    const baseUrl = options.baseUrl ?? 'https://api.testquality.com';
+    this.logger = options.logger ?? new EmptyLogger();
 
     this.api =
-      options.api ||
+      options.api ??
       axios.create({
         baseURL: `${baseUrl}/api`,
         timeout: 1000000,
@@ -52,6 +53,16 @@ export class ClientSdk {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
+        transformResponse: [
+          function transformResponse(data, headers) {
+            if (headers['content-type'] === 'application/json') {
+              return JSON.parse(data, (_, value) =>
+                value === null ? undefined : value,
+              );
+            }
+            return data;
+          },
+        ],
       });
 
     this.apiWorker = options.apiWorker;
@@ -63,25 +74,35 @@ export class ClientSdk {
     }
     this.persistentStorage = options.persistentStorage;
     this.tokenStorage =
-      options.tokenStorage || new TokenStorageImpl(options.persistentStorage);
-    if (options.tokenUpdateHandler) {
-      this.tokenUpdateHandler = options.tokenUpdateHandler;
+      options.tokenStorage ?? new TokenStorageImpl(options.persistentStorage);
+
+    this.auth = new Auth(this.tokenStorage, this, options.authCallback);
+  }
+
+  public getAuth(
+    /**
+     * @deprecated authCallback is set in constructor
+     */
+    authCallback?: AuthCallback,
+  ) {
+    if (authCallback) {
+      console.warn(
+        'Param authCallback has been deprecated since version 1.12.11',
+      );
     }
+    return this.auth;
+  }
+
+  /**
+   * @deprecated since version 1.12.11
+   */
+  public setAuth() {
+    console.warn('Method has been deprecated since version 1.12.11');
+    return this.getAuth();
   }
 
   public setErrorHandler(errorHandler: (newError: HttpError) => void): void {
     this.errorHandler = errorHandler;
-  }
-
-  public getAuth(authCallback?: AuthCallback) {
-    if (!this.auth) {
-      this.auth = new Auth(this.tokenStorage, this, authCallback);
-    } else if (authCallback) {
-      debug('setAuthCallback', authCallback);
-      this.auth.setAuthCallback(authCallback);
-    }
-
-    return this.auth;
   }
 
   public setAPIWorker(apiWorker: APIWorkerInterface) {

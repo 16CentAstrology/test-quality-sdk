@@ -2,7 +2,7 @@
  * Copyright (C) 2021 BitModern, Inc - All Rights Reserved
  */
 
-import { KeyedModel } from '../../models/KeyedModel';
+import type { KeyedModel } from '../../models/KeyedModel';
 
 export interface Comment extends KeyedModel {
   related_id: number;
@@ -16,4 +16,5 @@ export interface Comment extends KeyedModel {
   body?: string;
   id: number;
   key: number;
+  source?: any;
 }
