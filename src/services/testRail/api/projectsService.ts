@@ -47,9 +47,9 @@ export const postImportProject = (
     ? queryParams.batch.addBatch<{ job_id: string }>(config)
     : getResponse<
         { job_id: string },
-        {
+        Partial<{
           projectId: number | string;
           entitiesMapping: Mapping;
-        }
+        }>
       >(queryParams?.api ?? _client?.api, config);
 };
